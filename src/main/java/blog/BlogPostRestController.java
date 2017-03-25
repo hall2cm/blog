@@ -6,14 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Date;
 
 /**
  * Created by cohall on 3/22/2017.
  */
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5050", allowedHeaders = "Access-Control-Allow-Origin")
 @RequestMapping("/posts")
 class BlogPostRestController {
 
@@ -29,9 +30,10 @@ class BlogPostRestController {
         return this.blogPostRepository.findAllByOrderByPostedDateDesc();
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
     ResponseEntity<?> add(@RequestBody BlogPost input) {
-        BlogPost result = blogPostRepository.save(new BlogPost(input.postText, new Date(2017-03-22), input.author, input.title));
+        BlogPost result = blogPostRepository.save(new BlogPost(input.postText, Calendar.getInstance().getTime(), input.author, input.title));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")

@@ -23,7 +23,10 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        this.blogPostRepository.save(new BlogPost("This is my first blog post", Calendar.getInstance().getTime(), "Cory Hall", "Blog Post"));
+        this.blogPostRepository.save(new BlogPost("This is my first blog post", Calendar.getInstance().getTime(), "Cory Hall", "Blog Post 1"));
+        this.blogPostRepository.save(new BlogPost("This is my second blog post", Calendar.getInstance().getTime(), "Cory Hall", "Blog Post 2"));
+        this.blogPostRepository.save(new BlogPost("This is my third blog post", Calendar.getInstance().getTime(), "Cory Hall", "Blog Post 3"));
+        this.blogPostRepository.save(new BlogPost("This is my fourth blog post", Calendar.getInstance().getTime(), "Cory Hall", "Blog Post 4"));
     }
 
 }
