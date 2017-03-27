@@ -1,6 +1,7 @@
 package blog;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5050", allowedHeaders = "Access-Control-Allow-Origin")
+@CrossOrigin(origins = "*")
 @RequestMapping("/posts")
 class BlogPostRestController {
 
@@ -23,6 +24,11 @@ class BlogPostRestController {
     @Autowired
     BlogPostRestController(BlogPostRepository blogPostRepository) {
         this.blogPostRepository = blogPostRepository;
+    }
+
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    ResponseEntity handle() {
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -39,7 +45,7 @@ class BlogPostRestController {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(result.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/{blogPostId}")
