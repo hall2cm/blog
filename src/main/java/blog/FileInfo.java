@@ -5,22 +5,22 @@ package blog;
  */
 public class FileInfo {
 
-    private String fileName;
-    private long fileSize;
+    private String location;
+    //private long fileSize;
 
-    public String getFileName() {
-        return fileName;
+    public String getLocation() {
+        return location;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public long getFileSize() {
-        return fileSize;
-    }
+    //public long getFileSize() {
+    //    return fileSize;
+   // }
 
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
-    }
+    //public void setFileSize(long fileSize) {
+    //    this.fileSize = fileSize;
+    //}
 }
