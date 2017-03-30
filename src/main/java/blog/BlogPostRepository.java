@@ -12,4 +12,6 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     List<BlogPost> findAllByOrderByPostedDateDesc();
 
+    List<BlogPost> findByUserUid(String Uid);
+
 }

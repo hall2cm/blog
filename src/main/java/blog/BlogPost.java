@@ -1,6 +1,8 @@
 package blog;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,6 +13,10 @@ import java.util.Date;
 @Entity
 public class BlogPost {
 
+    @JsonIgnore
+    @ManyToOne
+    public User user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,21 +24,24 @@ public class BlogPost {
     BlogPost() { //jpa only
     }
 
-    public BlogPost(String postText, Date postedDate, String author, String title, String imageLocation) {
+    public BlogPost(User user, String postText, Date postedDate, String title, String imageLocation) {
         this.postText = postText;
         this.postedDate = postedDate;
-        this.author = author;
         this.title = title;
         this.imageLocation = imageLocation;
+        this.user = user;
     }
 
     @Lob
     public String postText;
 
     public Date postedDate;
-    public String author;
     public String title;
     public String imageLocation;
+
+    public User getUser() {
+        return user;
+    }
 
     public Long getId() {
         return id;
@@ -44,10 +53,6 @@ public class BlogPost {
 
     public Date getPostedDate() {
         return postedDate;
-    }
-
-    public String getAuthor() {
-        return author;
     }
 
     public String getTitle() {
