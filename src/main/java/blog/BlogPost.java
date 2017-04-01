@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by cohall on 3/21/2017.
@@ -13,9 +15,13 @@ import java.util.Date;
 @Entity
 public class BlogPost {
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     public User user;
+
+    //@JsonIgnore
+    @OneToMany(mappedBy = "blogPost")
+    private Set<Comments> comments = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +47,10 @@ public class BlogPost {
 
     public User getUser() {
         return user;
+    }
+
+    public Set<Comments> getComments() {
+        return comments;
     }
 
     public Long getId() {

@@ -40,9 +40,9 @@ class BlogPostRestController {
 
     //GET request returns user information and throws error if user does not exist.
     @RequestMapping(method = RequestMethod.GET, value="/{userId}")
-    Optional<User> readUser(@PathVariable String userId) {
+    User readUser(@PathVariable String userId) {
         this.validateUser(userId);
-        return this.userRepository.findByUid(userId);
+        return this.userRepository.findByUid(userId).get();
     }
 
     //POST request that adds a new user and returns the new location and the user in the body.
@@ -132,6 +132,9 @@ class BlogPostRestController {
             return new ResponseEntity<FileInfo>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
+
 
 
     //validates that the user exists.

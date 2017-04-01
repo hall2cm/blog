@@ -1,5 +1,7 @@
 package blog;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +14,13 @@ import java.util.Set;
 @Entity
 public class User {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<BlogPost> blogposts = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<Comments> comments = new HashSet<>();
 
 
     @Id
@@ -42,6 +49,10 @@ public class User {
 
     public Set<BlogPost> getBlogposts() {
         return blogposts;
+    }
+
+    public Set<Comments> getComments() {
+        return comments;
     }
 
     public Long getId() {
