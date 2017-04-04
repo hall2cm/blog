@@ -28,10 +28,13 @@ class BlogPostRestController {
 
     private final UserRepository userRepository;
 
+    private final CommentsRepository commentsRepository;
+
     @Autowired
-    BlogPostRestController(BlogPostRepository blogPostRepository, UserRepository userRepository) {
+    BlogPostRestController(BlogPostRepository blogPostRepository, UserRepository userRepository, CommentsRepository commentsRepository) {
         this.blogPostRepository = blogPostRepository;
         this.userRepository = userRepository;
+        this.commentsRepository = commentsRepository;
     }
 
     @Autowired
@@ -96,6 +99,27 @@ class BlogPostRestController {
                 })
                 .orElse(ResponseEntity.noContent().build());
 
+    }
+
+    //POST request that adds a new post comment
+    @RequestMapping(method = RequestMethod.POST, value="/posts/{blogPostId}/{userId}/comment")
+    ResponseEntity<?> addComment(@PathVariable Long blogPostId, @PathVariable String userId, @RequestBody Comments input) {
+        this.validateUser(userId);
+
+        BlogPost blogPost = this.blogPostRepository.findOne(blogPostId);
+
+        return this.userRepository
+                .findByUid(userId)
+                .map(user -> {
+                    Comments result = commentsRepository.save(new Comments(blogPost, user, input.commentText, Calendar.getInstance().getTime()));
+
+                    URI location = ServletUriComponentsBuilder
+                            .fromCurrentRequest().path("/{id}")
+                            .buildAndExpand(result.getId()).toUri();
+
+                    return ResponseEntity.created(location).body(result);
+                })
+                .orElse(ResponseEntity.noContent().build());
     }
 
 
