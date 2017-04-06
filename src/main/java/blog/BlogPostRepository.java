@@ -1,5 +1,7 @@
 package blog;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
-    List<BlogPost> findAllByOrderByPostedDateDesc();
+    Page<BlogPost> findAllByOrderByPostedDateDesc(Pageable pageable);
 
     List<BlogPost> findByUserUid(String Uid);
 

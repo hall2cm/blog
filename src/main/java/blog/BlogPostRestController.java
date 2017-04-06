@@ -1,6 +1,8 @@
 package blog;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,8 +78,8 @@ class BlogPostRestController {
 
     //GET request that returns a list of blog posts ordered by posted date.
     @RequestMapping(method = RequestMethod.GET, value="/posts")
-    List<BlogPost> readPosts() {
-        return this.blogPostRepository.findAllByOrderByPostedDateDesc();
+    Page<BlogPost> readPosts(Pageable pageable) {
+        return this.blogPostRepository.findAllByOrderByPostedDateDesc(pageable);
     }
 
     //POST request that adds a new blog post and throws an error if the user does not have the access to post.
