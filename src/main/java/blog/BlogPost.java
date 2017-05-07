@@ -30,12 +30,13 @@ public class BlogPost {
     BlogPost() { //jpa only
     }
 
-    public BlogPost(User user, String postText, Date postedDate, String title, String imageLocation) {
+    public BlogPost(User user, String postText, Date postedDate, String title, String imageLocation, String homeText) {
         this.postText = postText;
         this.postedDate = postedDate;
         this.title = title;
         this.imageLocation = imageLocation;
         this.user = user;
+        this.homeText = homeText;
     }
 
     @Lob
@@ -44,6 +45,9 @@ public class BlogPost {
     public Date postedDate;
     public String title;
     public String imageLocation;
+
+    @Lob
+    public String homeText;
 
     public User getUser() {
         return user;
@@ -70,6 +74,8 @@ public class BlogPost {
     }
 
     public String getImageLocation() { return imageLocation; }
+
+    public String getHomeText() { return homeText; }
 
 
 

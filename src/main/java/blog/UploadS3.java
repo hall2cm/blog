@@ -3,8 +3,10 @@ package blog;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +36,9 @@ public class UploadS3 {
     }
 
     public static void main(String[] args) throws IOException {
-        AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
+        AmazonS3 s3client = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.US_EAST_1).build();
+
         try {
             System.out.println("Uploading a new object to S3 from a file\n");
             s3client.putObject(new PutObjectRequest(

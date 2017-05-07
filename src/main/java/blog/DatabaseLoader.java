@@ -31,14 +31,14 @@ public class DatabaseLoader implements CommandLineRunner {
 
 
         User user = new User("Cory Hall", "hall2cm@gmail.com", "https://lh3.googleusercontent.com/-LjjClKrKzsI/AAAAAAAAAAI/AAAAAAAAFno/JQmdSiB-eZg/photo.jpg", "google.com", "mKwAdc5LcVdJ6WUlexACNTbCele2", "Creator");
-        BlogPost blogPost = new BlogPost(user,"This is my fourth blog post", Calendar.getInstance().getTime(), "Blog Post 4", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg");
+        BlogPost blogPost = new BlogPost(user,"This is my fourth blog post", Calendar.getInstance().getTime(), "Blog Post 4", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg", "This is the home page text 4");
 
 
         this.userRepository.save(user);
 
-        this.blogPostRepository.save(new BlogPost(user,"This is my first blog post", Calendar.getInstance().getTime(), "Blog Post 1", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg"));
-        this.blogPostRepository.save(new BlogPost(user, "This is my second blog post", Calendar.getInstance().getTime(), "Blog Post 2", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg"));
-        this.blogPostRepository.save(new BlogPost(user, "This is my third blog post", Calendar.getInstance().getTime(), "Blog Post 3", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg"));
+        this.blogPostRepository.save(new BlogPost(user,"This is my first blog post", Calendar.getInstance().getTime(), "Blog Post 1", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg", "This is the home page text 1"));
+        this.blogPostRepository.save(new BlogPost(user, "This is my second blog post", Calendar.getInstance().getTime(), "Blog Post 2", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg", "This is the home page text 2"));
+        this.blogPostRepository.save(new BlogPost(user, "This is my third blog post", Calendar.getInstance().getTime(), "Blog Post 3", "http://sarahsblog-test-bucket.s3.amazonaws.com/assets/sample1490732596688.jpg", "This is the home page text 3"));
         this.blogPostRepository.save(blogPost);
 
         this.commentsRepository.save(new Comments(blogPost, user, "This is a comment 123", Calendar.getInstance().getTime()));

@@ -44,14 +44,20 @@ class BlogPostRestController {
 
 
     //GET request returns user information and throws error if user does not exist.
-    @RequestMapping(method = RequestMethod.GET, value="/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value="/user/{userId}")
     User readUser(@PathVariable String userId) {
         this.validateUser(userId);
         return this.userRepository.findByUid(userId).get();
     }
 
+    //GET request to login a user. If user doesn't exist then create a user.
+    @RequestMapping(method = RequestMethod.GET, value="/user/login/{userId}")
+    Optional<User> loginUser(@PathVariable String userId) {
+        return this.userRepository.findByUid(userId);
+    }
+
     //POST request that adds a new user and returns the new location and the user in the body.
-    @RequestMapping(method = RequestMethod.POST, value="/addUser")
+    @RequestMapping(method = RequestMethod.POST, value="/user")
     ResponseEntity<?> addUser(@RequestBody User input) {
         User result = userRepository.save(new User(input.displayName, input.email, input.photoUrl, input.providerId, input.uid, "Reader"));
 
@@ -90,7 +96,7 @@ class BlogPostRestController {
         return this.userRepository
                 .findByUid(userId)
                 .map(user -> {
-                    BlogPost result = blogPostRepository.save(new BlogPost(user, input.postText, Calendar.getInstance().getTime(), input.title, input.imageLocation));
+                    BlogPost result = blogPostRepository.save(new BlogPost(user, input.postText, Calendar.getInstance().getTime(), input.title, input.imageLocation, input.homeText));
 
                     URI location = ServletUriComponentsBuilder
                             .fromCurrentRequest().path("/{id}")
@@ -177,6 +183,12 @@ class BlogPostRestController {
         this.userRepository.findByUidAndRole(userId, role).orElseThrow(
                 () -> new UserNotAllowedException(userId));
 
+    }
+
+    private void validateUserLogin(String userId) {
+        if (!this.userRepository.findByUid(userId).isPresent()) {
+
+        }
     }
 
 }
